@@ -31,8 +31,8 @@ jobs:
       - run:
           name: Push Docker image
           command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push your-username/memos:${CIRCLE_SHA1}
+            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            docker push mambostitch/mambo-stitch:${CIRCLE_SHA1}
       - deploy:
           name: Shippy-it!
           command: ./scripts/deploy_script.sh
