@@ -29,6 +29,9 @@ jobs:
           command: |
             docker build -t mambostitch/mambo-stitch:${CIRCLE_SHA1} .
       - run:
+          name: List all Docker images
+          command: docker images
+      - run:
           name: Push Docker image
           command: |
             echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
