@@ -11,7 +11,16 @@ echo "Removing stopped containers..."
 # Using specific tag to remove containers
 docker rm $(docker ps -a -q --filter "ancestor=mambostitch/mambo-stitch:${CIRCLE_SHA1}")
 
-echo "Starting new Docker container..."
+# Check for running containers and stop them if any
+containers_to_stop=$(docker ps -q --filter "ancestor=mambostitch/mambo-stitch:${CIRCLE_SHA1}")
+if [ ! -z "$containers_to_stop" ]; then
+    docker stop $containers_to_stop
+    docker rm $containers_to_stop
+else
+    echo "No containers to stop."
+fi
+
+# Start the new container
 docker run -d -p 80:80 --name mambo-stitch mambostitch/mambo-stitch:${CIRCLE_SHA1}
 
 echo "Shippy complete!"
