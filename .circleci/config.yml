@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t your-username/memos:${CIRCLE_SHA1} .
+            docker build -t mambostitch/mambo-stitch:${CIRCLE_SHA1} .
       - run:
           name: Push Docker image
           command: |
